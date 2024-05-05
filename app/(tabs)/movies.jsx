@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import { SafeAreaView, View, ScrollView, Text } from "react-native";
 
 import useAppwrite from "../../lib/useAppwrite";
-import { getAllShows, getAllCategories } from "../../lib/appwrite";
+import { getMovies, getAllCategories } from "../../lib/appwrite";
 import { SearchInput } from "../../components";
 import MoviesCarousel from "../../components/MovieCarousel.jsx";
 
-const Home = () => {
-  const { data: shows } = useAppwrite(getAllShows);
+const Movies = () => {
+  const { data: shows } = useAppwrite(getMovies);
+  // console.log("Movies", shows);
   const { data: categories } = useAppwrite(getAllCategories);
   const [showsByCategory, setShowsByCategory] = useState({});
-  console.log("shows by category", showsByCategory);
+  // console.log("shows by category", showsByCategory);
 
   useEffect(() => {
     if (shows && categories) {
@@ -19,7 +20,7 @@ const Home = () => {
         return acc;
       }, {});
 
-      console.log("Category Map:", categoryMap);
+      // console.log("Category Map:", categoryMap);
 
       const groupedShows = shows.reduce((acc, show) => {
         show.categories.forEach((categoryId) => {
@@ -48,10 +49,10 @@ const Home = () => {
   }, [shows, categories]);
 
   return (
-    <SafeAreaView className="bg-primary flex-1">
+    <SafeAreaView className="bg-black flex-1">
       <View className="flex-1 px-4 py-6">
         <SearchInput />
-        <ScrollView>
+        <ScrollView className="mt-3">
           {categories.map((category) => (
             <View key={category.$id} className="mb-6">
               <MoviesCarousel
@@ -66,4 +67,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Movies;

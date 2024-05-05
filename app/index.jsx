@@ -10,10 +10,10 @@ import { useGlobalContext } from "../context/GlobalProvider";
 const Welcome = () => {
   const { isLoading, isLoggedIn } = useGlobalContext();
 
-  if (!isLoading && isLoggedIn) return <Redirect href="/home" />;
+  if (!isLoading && isLoggedIn) return <Redirect href="/series" />;
 
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-black h-full">
       <Loader isLoading={isLoading} />
 
       <ScrollView

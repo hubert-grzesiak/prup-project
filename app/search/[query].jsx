@@ -1,54 +1,87 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import useAppwrite from "../../lib/useAppwrite";
-import { searchPosts } from "../../lib/appwrite";
-import { EmptyState, SearchInput, VideoCard } from "../../components";
+import { searchShows } from "../../lib/appwrite";
+import { EmptyState, SearchInput, MovieCard } from "../../components";
 
 const Search = () => {
   const { query } = useLocalSearchParams();
-  const { data: posts, refetch } = useAppwrite(() => searchPosts(query));
+  const { data: shows, refetch } = useAppwrite(() => searchShows(query));
 
   useEffect(() => {
     refetch();
   }, [query]);
 
+  const [watchlist, setWatchlist] = useState(new Map());
+
+  useEffect(() => {
+    const watchlistMap = new Map();
+    shows.forEach((movie) => {
+      watchlistMap.set(movie.$id, movie.isInWatchlist);
+    });
+    setWatchlist(watchlistMap);
+  }, [shows]);
+
+  const handleWatchlistToggle = (id) => {
+    setWatchlist(new Map(watchlist.set(id, !watchlist.get(id))));
+
+    addToWatchlist(id);
+  };
+  console.log(shows);
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-black h-full">
       <FlatList
-        data={posts}
+        data={shows}
         keyExtractor={(item) => item.$id}
+        contentContainerStyle={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          gap: 11,
+        }}
         renderItem={({ item }) => (
-          <VideoCard
+          <MovieCard
+            id={item.$id}
             title={item.title}
-            thumbnail={item.thumbnail}
-            video={item.video}
-            creator={item.creator.username}
-            avatar={item.creator.avatar}
+            description={item.description}
+            image={item.image}
+            rating={item.rating}
+            year={item.year}
+            numberOfEpisodes={item.numberOfEpisodes}
+            categories={item.categories}
+            platforms={item.platforms}
+            type={item.type}
+            isInWatchlist={watchlist.get(item.$id)}
+            onWatchlistToggle={() => handleWatchlistToggle(item.$id)}
+            className="mb-2"
           />
         )}
+        numColumns={2}
         ListHeaderComponent={() => (
-          <>
-            <View className="flex my-6 px-4">
-              <Text className="font-pmedium text-gray-100 text-sm">
+          <View className="flex w-full justify-items-start">
+            <View className="flex mt-6 px-4">
+              <Text className="font-medium text-gray-100 text-sm">
                 Search Results
               </Text>
               <Text className="text-2xl font-psemibold text-white mt-1">
                 {query}
               </Text>
 
-              <View className="mt-6 mb-8">
+              <View className="mt-6 mb-6 w-[280px]">
                 <SearchInput initialQuery={query} refetch={refetch} />
               </View>
             </View>
-          </>
+          </View>
         )}
         ListEmptyComponent={() => (
           <EmptyState
-            title="No Videos Found"
-            subtitle="No videos found for this search query"
+            title="No Shows Found"
+            subtitle="No shows found for this search query"
           />
         )}
       />

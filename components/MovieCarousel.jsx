@@ -31,8 +31,10 @@ const MoviesCarousel = ({ title, movies, className }) => {
       image={item.image}
       rating={item.rating}
       year={item.year}
+      numberOfEpisodes={item.numberOfEpisodes}
       categories={item.categories}
       platforms={item.platforms}
+      type={item.type}
       isInWatchlist={watchlist.get(item.$id)}
       onWatchlistToggle={() => handleWatchlistToggle(item.$id)}
       className="mr-2"
@@ -40,7 +42,7 @@ const MoviesCarousel = ({ title, movies, className }) => {
   );
 
   return (
-    <View className={cn("w-full bg-[#121212]", className)}>
+    <View className={cn("w-full bg-[#121212] rounded-xl py-2", className)}>
       <View className="flex flex-row ml-4 mb-5 mt-3">
         <View className="w-1 bg-[#f5c518] rounded-md mr-2" />
         <Text className="text-white font-bold text-[20px]">{title}</Text>

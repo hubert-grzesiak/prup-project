@@ -29,7 +29,7 @@ const SignUp = () => {
       setUser(result);
       setIsLoggedIn(true);
 
-      router.replace("/home");
+      router.replace("/series");
     } catch (error) {
       Alert.alert("Error", error.message);
     } finally {
@@ -38,22 +38,23 @@ const SignUp = () => {
   };
 
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-black h-full">
       <ScrollView>
         <View
           className="w-full flex justify-center h-full px-4 my-6"
           style={{
             minHeight: Dimensions.get("window").height - 100,
-          }}
-        >
-          <Image
-            source={images.logo}
-            resizeMode="contain"
-            className="w-[115px] h-[34px]"
-          />
+          }}>
+          <View className="flex flex-row gap-1 items-center justify-center translate-y-[-5px]">
+            <Image
+              source={images.logo}
+              resizeMode="contain"
+              className="w-[115px]"
+            />
+          </View>
 
           <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Sign Up to Aora
+            Sign Up to WatchList
           </Text>
 
           <FormField
@@ -91,8 +92,7 @@ const SignUp = () => {
             </Text>
             <Link
               href="/sign-in"
-              className="text-lg font-psemibold text-secondary"
-            >
+              className="text-lg font-psemibold text-secondary">
               Login
             </Link>
           </View>

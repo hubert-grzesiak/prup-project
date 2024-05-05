@@ -9,7 +9,7 @@ const CustomModal = ({
   image = "",
   rating = "",
   year = "",
-  numberOfEpisodes = null,
+  numberOfEpisodes = 0,
   type = "",
   categories = [],
   platforms = [],
@@ -53,11 +53,9 @@ const CustomModal = ({
                 <Text className="text-white text-xl">{title}</Text>
                 <View className="flex-row flex-wrap items-center">
                   <Text className="text-gray-400">{year}</Text>
-
                   <Text className="text-gray-400">
-                    {numberOfEpisodes > 1 ? `${numberOfEpisodes} episodes` : ""}
+                    {type == "movie" ? "" : ` · ${numberOfEpisodes} episodes`}
                   </Text>
-                  <Text className="text-gray-400"> {type}</Text>
                 </View>
                 <Text className="text-gray-400">
                   {categories.map((category, index) => (

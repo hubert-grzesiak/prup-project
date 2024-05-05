@@ -13,7 +13,7 @@ const MovieCard = ({
   genre = "",
   rating = "",
   year = "",
-  numberOfEpisodes = null,
+  numberOfEpisodes = 0,
   platform = "",
   type = "",
   isInWatchlist = false,
@@ -24,7 +24,7 @@ const MovieCard = ({
   className,
 }) => {
   const handleAddToWatchlist = () => {
-    addShowToWatchlist(id); 
+    addShowToWatchlist(id);
   };
 
   return (
@@ -50,7 +50,7 @@ const MovieCard = ({
         </View>
 
         {/* Title */}
-        <View className="mb-3 w-[130px] h-[30px] truncate">
+        <View className="mb-3 w-[115px] h-[30px] truncate">
           <Text className="text-white text-base">{title}</Text>
         </View>
 

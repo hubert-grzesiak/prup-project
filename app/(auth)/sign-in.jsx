@@ -30,7 +30,7 @@ const SignIn = () => {
       setIsLoggedIn(true);
 
       Alert.alert("Success", "User signed in successfully");
-      router.replace("/home");
+      router.replace("/series");
     } catch (error) {
       Alert.alert("Error", error.message);
     } finally {
@@ -39,21 +39,22 @@ const SignIn = () => {
   };
 
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-black h-full">
       <ScrollView>
         <View
           className="w-full flex justify-center h-full px-4 my-6"
           style={{
             minHeight: Dimensions.get("window").height - 100,
           }}>
-          <Image
-            source={images.logo}
-            resizeMode="contain"
-            className="w-[115px] h-[34px]"
-          />
-
+          <View className="flex flex-row gap-1 items-center justify-center translate-y-[-30px]">
+            <Image
+              source={images.logo}
+              resizeMode="contain"
+              className="w-[115px]"
+            />
+          </View>
           <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Log in to Aora
+            Log in to WatchList
           </Text>
 
           <FormField
