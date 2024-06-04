@@ -54,7 +54,7 @@ npm start
 
 Uruchom **Android Studio** i odpal urządzenie (np: **Pixel 4 API 31**)
 
-Visual Studio Code: Poczekaj chwilę aż załaduje kod QR a potem w terminalu w naciśnij przycisk **"A"**.
+Visual Studio Code: Poczekaj chwilę aż załaduje kod QR a potem w terminalu w naciśnij przycisk **"a"**.
 Aplikacja sama się zainstaluje na emulatorze w Android Studio.
 
 ![Instrukcja](image.png)
