@@ -42,18 +42,18 @@ const SignIn = () => {
     <SafeAreaView className="bg-black h-full">
       <ScrollView>
         <View
-          className="w-full flex justify-center h-full px-4 my-6"
+          className="w-full flex justify-center px-4 my-6"
           style={{
             minHeight: Dimensions.get("window").height - 100,
           }}>
           <View className="flex flex-row gap-1 items-center justify-center translate-y-[-30px]">
             <Image
               source={images.logo}
+              className="w-[130px] h-[84px]"
               resizeMode="contain"
-              className="w-[115px]"
             />
           </View>
-          <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
+          <Text className="text-2xl font-semibold text-white mt-5 font-psemibold">
             Log in to WatchList
           </Text>
 

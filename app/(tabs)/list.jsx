@@ -15,7 +15,7 @@ import debounce from "lodash.debounce";
 export default function List() {
   const [listItems, setListItems] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [filteredItems, setFilteredItems] = useState([]); // Declare the state for filtered items
+  const [filteredItems, setFilteredItems] = useState([]); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,13 +39,12 @@ export default function List() {
       }
     }, 500),
     []
-  ); // Debounce time of 500ms
+  ); 
 
   const handleEpisodeChange = (itemIndex, change) => {
     const currentItem = listItems[itemIndex];
     const newEpisodeCount = Math.max(0, currentItem.current_episode + change);
 
-    // Optimistically update the UI
     const updatedListItems = [...listItems];
     updatedListItems[itemIndex] = {
       ...currentItem,
@@ -53,12 +52,10 @@ export default function List() {
     };
     setListItems(updatedListItems);
 
-    // Call the debounced update function
     debouncedUpdateEpisodeCount(currentItem.$id, change, itemIndex);
   };
 
   useEffect(() => {
-    // Filter items based on selected tab index
     const filtered = listItems.filter((item) => {
       switch (selectedIndex) {
         case 0: // Currently Watching
@@ -79,7 +76,7 @@ export default function List() {
   }, [listItems, selectedIndex]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }} className="bg-black">
+    <SafeAreaView style={{ flex: 1 }} className="bg-black pb-0">
       <SegmentedControlTab
         values={["Currently", "Plan to Watch", "Completed", "All Shows"]}
         selectedIndex={selectedIndex}

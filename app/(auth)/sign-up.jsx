@@ -40,16 +40,12 @@ const SignUp = () => {
   return (
     <SafeAreaView className="bg-black h-full">
       <ScrollView>
-        <View
-          className="w-full flex justify-center h-full px-4 my-6"
-          style={{
-            minHeight: Dimensions.get("window").height - 100,
-          }}>
-          <View className="flex flex-row gap-1 items-center justify-center translate-y-[-5px]">
+        <View className="w-full flex justify-center h-full px-4 my-6">
+          <View className="flex flex-row gap-1 items-center justify-center">
             <Image
               source={images.logo}
+              className="w-[130px] h-[84px]"
               resizeMode="contain"
-              className="w-[115px]"
             />
           </View>
 

@@ -33,7 +33,7 @@ const Profile = () => {
               />
             </TouchableOpacity>
 
-            <View className="w-16 h-16 border border-secondary rounded-lg flex justify-center items-center">
+            <View className="w-16 h-16 border rounded-lg flex justify-center items-center">
               <Image
                 source={{ uri: user?.avatar }}
                 className="w-[90%] h-[90%] rounded-lg"
@@ -48,7 +48,12 @@ const Profile = () => {
             />
 
             <View className="mt-5 flex flex-row">
-              <InfoBox title="99" subtitle="Followers" titleStyles="text-xl" />
+              <InfoBox
+                title="99"
+                subtitle="Followers"
+                titleStyles="text-xl"
+                className="mr-2"
+              />
             </View>
           </View>
         )}

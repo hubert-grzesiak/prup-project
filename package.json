@@ -38,7 +38,9 @@
     "react-native-screens": "3.31.1",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-segmented-control-tab": "^4.0.0",
-    "tailwind-merge": "^2.3.0"
+    "tailwind-merge": "^2.3.0",
+    "react-native-web": "~0.19.10",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.3",

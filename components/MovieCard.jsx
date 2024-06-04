@@ -43,10 +43,11 @@ const MovieCard = ({
 
       <View className="px-2 py-2.5">
         {/* Rating */}
-        <View className="flex flex-row items-center mb-1">
+        <View className="flex flex-row items-center mb-1 gap-1">
           <Text className="text-orange-300 font-semibold text-opacity-70">
             {rating}
           </Text>
+          <Text className="text-[10px]">⭐</Text>
         </View>
 
         {/* Title */}
