@@ -1,20 +1,34 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { ScrollView, View, Text, TouchableOpacity, Image } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  RefreshControl,
+} from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
-import { getList, updateEpisodeCount } from "../../lib/appwrite";
+import { updateEpisodeCount } from "../../lib/appwrite";
 import { SafeAreaView } from "react-native-safe-area-context";
 import debounce from "lodash.debounce";
 import * as Haptics from "expo-haptics";
-
+import { useGlobalContext } from "../../context/GlobalProvider";
+import { getList } from "../../lib/appwrite";
 export default function List() {
+  const { watchlist, setNeedsRefresh } = useGlobalContext();
   const [listItems, setListItems] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
   const latestListItemsRef = useRef(listItems);
   const updateQueue = useRef({});
 
   useEffect(() => {
     latestListItemsRef.current = listItems;
   }, [listItems]);
+
+  useEffect(() => {
+    setListItems(watchlist);
+  }, [watchlist]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,8 +53,7 @@ export default function List() {
             updateEpisodeCount(docId, cumulativeChange)
           )
         );
-        const updatedItems = await getList();
-        setListItems(updatedItems);
+        setNeedsRefresh(true);
       } catch (error) {
         console.error("Failed to update episode count:", error);
         alert("Failed to update episode count. Please try again.");
@@ -75,18 +88,24 @@ export default function List() {
   const filterItems = (items, index) => {
     switch (index) {
       case 0: // Currently Watching
-        return items.filter(
-          (item) =>
-            item.current_episode > 0 &&
-            item.current_episode < item.showDetails.numberOfEpisodes
-        );
+        return items
+          .filter(
+            (item) =>
+              item.current_episode > 0 &&
+              item.current_episode < item.showDetails.numberOfEpisodes
+          )
+          .sort((a, b) => {
+            const aProgress =
+              a.current_episode / a.showDetails.numberOfEpisodes;
+            const bProgress =
+              b.current_episode / b.showDetails.numberOfEpisodes;
+            return aProgress - bProgress;
+          });
       case 1: // All Shows
         return items.sort((a, b) => {
-          if (a.current_episode === 0) return -1;
-          if (b.current_episode === 0) return 1;
-          if (a.current_episode === a.showDetails.numberOfEpisodes) return 1;
-          if (b.current_episode === b.showDetails.numberOfEpisodes) return -1;
-          return a.current_episode - b.current_episode;
+          const aProgress = a.current_episode / a.showDetails.numberOfEpisodes;
+          const bProgress = b.current_episode / b.showDetails.numberOfEpisodes;
+          return aProgress - bProgress;
         });
       default:
         return items;
@@ -94,6 +113,12 @@ export default function List() {
   };
 
   const filteredItems = filterItems(listItems, selectedIndex);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setNeedsRefresh(true);
+    setRefreshing(false);
+  }, [setNeedsRefresh]);
 
   return (
     <SafeAreaView style={{ flex: 1 }} className="bg-black pb-0">
@@ -108,7 +133,11 @@ export default function List() {
         activeTabStyle={{ backgroundColor: "#1a1a1a" }}
         tabTextStyle={{ color: "gray", paddingTop: 3, paddingBottom: 3 }}
       />
-      <ScrollView className="flex flex-col gap-2 mt-2">
+      <ScrollView
+        className="flex flex-col gap-2 mt-2"
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         {filteredItems.map((item, i) => (
           <View
             key={i}

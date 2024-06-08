@@ -1,15 +1,14 @@
-import { cn } from "../lib/utils.js";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Image, TouchableOpacity, View, Text } from "react-native";
+import { useGlobalContext } from "../context/GlobalProvider";
 import CustomModal from "./CustomModal.jsx";
-import { addToWatchlist as addShowToWatchlist } from "../lib/appwrite.js";
+import { cn } from "../lib/utils.js";
 
 const MovieCard = ({
   title = "",
   description = "",
   image = "",
   id,
-  hasDefaultAction = true,
   genre = "",
   rating = "",
   year = "",
@@ -17,16 +16,11 @@ const MovieCard = ({
   platform = "",
   type = "",
   isInWatchlist = false,
-  onCardClick,
-  addToWatchlist,
+  onWatchlistToggle,
   categories = [],
   platforms = [],
   className,
 }) => {
-  const handleAddToWatchlist = () => {
-    addShowToWatchlist(id);
-  };
-
   return (
     <View
       className={cn(
@@ -40,28 +34,23 @@ const MovieCard = ({
           className="object-contain w-[133px] h-[197px] scale-105"
         />
       </View>
-
       <View className="px-2 py-2.5">
-        {/* Rating */}
         <View className="flex flex-row items-center mb-1 gap-1">
           <Text className="text-orange-300 font-semibold text-opacity-70">
             {rating}
           </Text>
           <Text className="text-[10px]">⭐</Text>
         </View>
-
-        {/* Title */}
         <View className="mb-3 w-[115px] h-[30px] truncate">
           <Text className="text-white text-base">{title}</Text>
         </View>
-
-        {/* Watchlist Button */}
         <TouchableOpacity
-          onPress={handleAddToWatchlist}
+          onPress={onWatchlistToggle}
           className="bg-[#FFFFFF14] py-2 rounded-xs items-center justify-center">
-          <Text className="text-blue-400">Watchlist</Text>
+          <Text className="text-blue-400">
+            {isInWatchlist ? "Watchlist -" : "Watchlist +"}
+          </Text>
         </TouchableOpacity>
-
         <CustomModal
           title={title}
           description={description}

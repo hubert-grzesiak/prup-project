@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { getCurrentUser } from "../lib/appwrite";
+import { getCurrentUser, getList, addToWatchlist as addShowToWatchlist } from "../lib/appwrite";
 
 const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);
@@ -8,8 +8,9 @@ const GlobalProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [watchlist, setWatchlist] = useState([]);
+  const [needsRefresh, setNeedsRefresh] = useState(false);
 
-  // Efekt do pobrania danych o bieżącym użytkowniku
   useEffect(() => {
     const loadCurrentUser = async () => {
       try {
@@ -27,6 +28,22 @@ const GlobalProvider = ({ children }) => {
     loadCurrentUser();
   }, []);
 
+  useEffect(() => {
+    if (needsRefresh) {
+      const fetchWatchlist = async () => {
+        const items = await getList();
+        setWatchlist(items);
+        setNeedsRefresh(false);
+      };
+      fetchWatchlist();
+    }
+  }, [needsRefresh]);
+
+  const addToWatchlist = async (id) => {
+    await addShowToWatchlist(id);
+    setNeedsRefresh(true);
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -35,7 +52,11 @@ const GlobalProvider = ({ children }) => {
         setUser,
         setIsLoggedIn,
         loading,
-      }}>
+        watchlist,
+        addToWatchlist,
+        setNeedsRefresh,
+      }}
+    >
       {children}
     </GlobalContext.Provider>
   );

@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { View, FlatList, Dimensions, Text } from "react-native";
 import MovieCard from "./MovieCard.jsx";
 import { cn } from "../lib/utils.js";
+import { useGlobalContext } from "../context/GlobalProvider";
 
 const { width: viewportWidth } = Dimensions.get("window");
 
 const MoviesCarousel = ({ title, movies, className }) => {
+  const { addToWatchlist } = useGlobalContext();
   const [watchlist, setWatchlist] = useState(new Map());
 
   useEffect(() => {
@@ -18,8 +20,6 @@ const MoviesCarousel = ({ title, movies, className }) => {
 
   const handleWatchlistToggle = (id) => {
     setWatchlist(new Map(watchlist.set(id, !watchlist.get(id))));
-    // Assuming addToWatchlist from "../lib/appwrite.js" is called here.
-    // This function should handle the actual API call to add/remove from watchlist
     addToWatchlist(id);
   };
 
