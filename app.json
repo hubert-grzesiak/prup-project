@@ -1,31 +1,41 @@
 {
+  "cli": {
+    "version": ">= 9.2.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "MYAPP_COMPILE_SDK_VERSION": "33",
+        "MYAPP_BUILD_TOOLS_VERSION": "33.0.0",
+        "MYAPP_MIN_SDK_VERSION": "21",
+        "MYAPP_TARGET_SDK_VERSION": "33"
+      }
+    },
+    "production": {
+      "env": {
+        "MYAPP_COMPILE_SDK_VERSION": "33",
+        "MYAPP_BUILD_TOOLS_VERSION": "33.0.0",
+        "MYAPP_MIN_SDK_VERSION": "21",
+        "MYAPP_TARGET_SDK_VERSION": "33"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  },
   "expo": {
-    "name": "watchlist",
-    "slug": "watchlist",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+    "extra": {
+      "eas": {
+        "projectId": "31d89c8f-32e2-4b08-8bc2-2fbbb1942161"
+      }
     },
-    "scheme": "watchlist",
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.hubert.watchlist"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": ["expo-router", "expo-font"]
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
