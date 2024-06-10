@@ -1,41 +1,45 @@
 {
-  "cli": {
-    "version": ">= 9.2.0"
-  },
-  "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal",
-      "env": {
-        "MYAPP_COMPILE_SDK_VERSION": "33",
-        "MYAPP_BUILD_TOOLS_VERSION": "33.0.0",
-        "MYAPP_MIN_SDK_VERSION": "21",
-        "MYAPP_TARGET_SDK_VERSION": "33"
-      }
-    },
-    "production": {
-      "env": {
-        "MYAPP_COMPILE_SDK_VERSION": "33",
-        "MYAPP_BUILD_TOOLS_VERSION": "33.0.0",
-        "MYAPP_MIN_SDK_VERSION": "21",
-        "MYAPP_TARGET_SDK_VERSION": "33"
-      }
-    }
-  },
-  "submit": {
-    "production": {}
-  },
   "expo": {
-    "extra": {
-      "eas": {
-        "projectId": "31d89c8f-32e2-4b08-8bc2-2fbbb1942161"
-      }
+    "name": "WatchList",
+    "scheme": "WatchList",
+    "slug": "WatchList",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "package": "com.hubert.WatchList"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.Hubert.WatchList"
+    },
+    "web": {
+      "favicon": "./assets/images/logo.png"
     },
     "plugins": [
-      "expo-router"
-    ]
+      "expo-router",
+      "expo-font"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f4335f06-8d96-4dbd-9264-3da0223e95b1"
+      }
+    }
   }
 }
